@@ -1,0 +1,21 @@
+{
+  "name": "qa-guru-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
