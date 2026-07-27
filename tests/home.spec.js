@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { MainPage } from '../pages/MainPage';
-import { LoginPage } from '../pages/LoginPage';
-import { HomePage } from '../pages/HomePage';
-import { FeedPage } from '../pages/FeedPage';
-import { ArticlePage } from '../pages/ArticlePage';
-import { EditorPage } from '../pages/EditorPage';
-import { ProfilePage } from '../pages/ProfilePage';
+import {
+  ArticlePage,
+  EditorPage,
+  FeedPage,
+  HomePage,
+  LoginPage,
+  MainPage,
+  ProfilePage,
+} from '../src/pages/index.js';
 
 const email = process.env.TEST_USER_EMAIL;
 const currentPassword = process.env.TEST_USER_PASSWORD;
