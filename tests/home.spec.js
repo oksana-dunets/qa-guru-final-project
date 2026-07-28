@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker';
+
 import {
   ArticlePage,
   EditorPage,
@@ -9,6 +9,8 @@ import {
   MainPage,
   ProfilePage,
 } from '../src/pages/index.js';
+
+import { ArticleBuilder } from '../src/builders/index.js';
 
 const email = process.env.TEST_USER_EMAIL;
 const currentPassword = process.env.TEST_USER_PASSWORD;
@@ -26,97 +28,97 @@ test.beforeEach(async ({ page }) => {
 
 test('Create Article', async ({ page }) => {
   const home = new HomePage(page);
-  const article = new ArticlePage(page);
+  const articlePage = new ArticlePage(page);
   const editor = new EditorPage(page);
 
-  const title = `Article ${Date.now()}`;
+  const article = new ArticleBuilder().build();
 
   await home.clickNewArticle();
 
   await editor.createArticle(
-    title,
-    'Created by autotest',
-    'Test article body'
+    article.title,
+    article.description,
+    article.body
   );
 
-  await expect(article.articleTitle).toHaveText(title);
+  await expect(articlePage.articleTitle).toHaveText(article.title);
 });
 
 test('Edit Article', async ({ page }) => {
   const home = new HomePage(page);
-  const article = new ArticlePage(page);
+  const articlePage = new ArticlePage(page);
   const editor = new EditorPage(page);
 
-  const title = `Article ${Date.now()}`;
-  const updatedTitle = `Updated ${Date.now()}`;
+  const article = new ArticleBuilder().build();
+  const updatedArticle = new ArticleBuilder().build();
 
   await home.open();
-
   await home.clickNewArticle();
 
   await editor.createArticle(
-    title,
-    'Created by autotest',
-    'Test article body'
+    article.title,
+    article.description,
+    article.body
   );
 
-  await article.openEditArticle();
+  await articlePage.openEditArticle();
 
-  await editor.updateArticleTitle(updatedTitle);
+  await editor.updateArticleTitle(updatedArticle.title);
 
-  await expect(article.articleTitle).toHaveText(updatedTitle);
+  await expect(articlePage.articleTitle).toHaveText(
+    updatedArticle.title
+  );
 });
 
 test('Delete Article', async ({ page }) => {
   const home = new HomePage(page);
   const feed = new FeedPage(page);
-  const article = new ArticlePage(page);
+  const articlePage = new ArticlePage(page);
   const editor = new EditorPage(page);
 
-  const title = `Article ${faker.string.uuid()}`;
+  const article = new ArticleBuilder().build();
 
   await home.open();
-
   await home.clickNewArticle();
 
   await editor.createArticle(
-    title,
-    'Created by autotest',
-    'Test article body'
+    article.title,
+    article.description,
+    article.body
   );
 
-  await article.deleteArticle();
+  await articlePage.deleteArticle();
 
   await feed.openGlobalFeed();
 
-  await expect(feed.articleTitleByText(title)).toHaveCount(0);
+  await expect(
+    feed.articleTitleByText(article.title)
+  ).toHaveCount(0);
 });
 
 test('Favorite Article', async ({ page }) => {
   const home = new HomePage(page);
   const feed = new FeedPage(page);
-  const article = new ArticlePage(page);
+  const articlePage = new ArticlePage(page);
   const editor = new EditorPage(page);
 
-  const title = `Article ${Date.now()}`;
+  const article = new ArticleBuilder().build();
 
   await home.open();
-
   await home.clickNewArticle();
 
   await editor.createArticle(
-    title,
-    'Created by autotest',
-    'Test article body'
+    article.title,
+    article.description,
+    article.body
   );
 
-  await expect(article.articleTitle).toHaveText(title);
+  await expect(articlePage.articleTitle).toHaveText(article.title);
 
   await home.open();
-
   await feed.openGlobalFeed();
 
-  await expect(feed.firstArticleTitle).toHaveText(title);
+  await expect(feed.firstArticleTitle).toHaveText(article.title);
 
   await feed.favoriteFirstArticle();
 
