@@ -77,7 +77,6 @@ test('Favorite Article', async ({
 });
 
 // № 5 Обновление информации в профиле пользователя
-// № 5 Обновление информации в профиле пользователя
 test('Update Profile', async ({
   profileFacade,
   profilePage,
