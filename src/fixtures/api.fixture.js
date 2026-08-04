@@ -5,6 +5,7 @@ import {
 
 import { AuthController } from '../api/index.js';
 import { UserBuilder } from '../builders/index.js';
+import { ArticleApiFacade } from '../facades/index.js';
 
 export const test = base.extend({
   publicApiContext: async ({ playwright }, use) => {
@@ -79,6 +80,15 @@ export const test = base.extend({
     await use(authorizedApiContext);
 
     await authorizedApiContext.dispose();
+  },
+
+  articleApiFacade: async ({
+    authorizedApiContext,
+  }, use) => {
+    const articleApiFacade =
+      new ArticleApiFacade(authorizedApiContext);
+
+    await use(articleApiFacade);
   },
 });
 

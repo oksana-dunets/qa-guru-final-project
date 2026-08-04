@@ -1,1 +1,4 @@
-export { AuthController } from './controllers/index.js';
+export {
+  AuthController,
+  ArticlesController,
+} from './controllers/index.js';
