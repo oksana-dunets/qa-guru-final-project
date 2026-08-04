@@ -1,4 +1,5 @@
 export {
-  AuthController,
   ArticlesController,
+  AuthController,
+  CommentsController,
 } from './controllers/index.js';

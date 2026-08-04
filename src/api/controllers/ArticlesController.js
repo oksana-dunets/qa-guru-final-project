@@ -54,4 +54,13 @@ export class ArticlesController {
       `articles/${encodeURIComponent(slug)}/favorite`
     );
   }
+
+  async getArticlesByTag(tag) {
+  return this.apiContext.get('articles', {
+    params: {
+      tag,
+    },
+  });
+}
+
 }

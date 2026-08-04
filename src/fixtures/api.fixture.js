@@ -4,8 +4,13 @@ import {
 } from '@playwright/test';
 
 import { AuthController } from '../api/index.js';
+
 import { UserBuilder } from '../builders/index.js';
-import { ArticleApiFacade } from '../facades/index.js';
+
+import {
+  ArticleApiFacade,
+  CommentApiFacade,
+} from '../facades/index.js';
 
 export const test = base.extend({
   publicApiContext: async ({ playwright }, use) => {
@@ -72,8 +77,7 @@ export const test = base.extend({
         baseURL: process.env.API_BASE_URL,
 
         extraHTTPHeaders: {
-          Authorization:
-            `Token ${apiSession.token}`,
+          Authorization: `Token ${apiSession.token}`,
         },
       });
 
@@ -89,6 +93,15 @@ export const test = base.extend({
       new ArticleApiFacade(authorizedApiContext);
 
     await use(articleApiFacade);
+  },
+
+  commentApiFacade: async ({
+    authorizedApiContext,
+  }, use) => {
+    const commentApiFacade =
+      new CommentApiFacade(authorizedApiContext);
+
+    await use(commentApiFacade);
   },
 });
 

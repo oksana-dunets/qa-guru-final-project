@@ -149,6 +149,44 @@ export class ArticleApiFacade {
   };
 }
 
+async createAndFilterArticleByTag(article) {
+  const createResponse =
+    await this.articlesController.createArticle(article);
+
+  const createStatus = createResponse.status();
+  const createBody =
+    await this.#readResponseBody(createResponse);
+
+  const slug = createBody?.article?.slug;
+  const tag = article.tagList?.[0];
+
+  let filterStatus = null;
+  let filterBody = null;
+  let cleanupStatus = null;
+
+  if (slug && tag) {
+    const filterResponse =
+      await this.articlesController.getArticlesByTag(tag);
+
+    filterStatus = filterResponse.status();
+    filterBody =
+      await this.#readResponseBody(filterResponse);
+
+    const deleteResponse =
+      await this.articlesController.deleteArticle(slug);
+
+    cleanupStatus = deleteResponse.status();
+  }
+
+  return {
+    createStatus,
+    createBody,
+    filterStatus,
+    filterBody,
+    cleanupStatus,
+  };
+}
+
 
   async #readResponseBody(response) {
     const responseText = await response.text();
