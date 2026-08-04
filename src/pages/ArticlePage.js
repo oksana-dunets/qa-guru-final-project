@@ -2,18 +2,28 @@ export class ArticlePage {
   constructor(page) {
     this.page = page;
 
-    this.articleTitle =
-      page.locator('h1');
+    this.articleTitle = page.locator('h1');
 
-    this.editArticleButton =
-      page.getByRole('link', {
-        name: /Edit Article/
-      }).first();
+    this.authorProfileLink = page
+      .locator('.article-meta')
+      .getByRole('link')
+      .first();
 
-    this.deleteArticleButton =
-      page.getByRole('button', {
-        name: /Delete Article/
-      }).first();
+    this.editArticleButton = page
+      .getByRole('link', {
+        name: /Edit Article/,
+      })
+      .first();
+
+    this.deleteArticleButton = page
+      .getByRole('button', {
+        name: /Delete Article/,
+      })
+      .first();
+  }
+
+  async openAuthorProfile() {
+    await this.authorProfileLink.click();
   }
 
   async openEditArticle() {

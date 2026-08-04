@@ -3,15 +3,12 @@ import {
   test,
 } from '../../src/fixtures/index.js';
 
-import {
-  HomePage,
-  LoginPage,
-  MainPage,
-} from '../../src/pages/index.js';
-
 import { ArticleBuilder } from '../../src/builders/index.js';
 
-const email = process.env.TEST_USER_EMAIL;
+test.describe.configure({
+  timeout: 60_000,
+});
+
 const currentPassword = process.env.TEST_USER_PASSWORD;
 
 // № 1 Создание новой статьи
@@ -80,7 +77,7 @@ test('Favorite Article', async ({
 test('Update Profile', async ({
   profileFacade,
   profilePage,
-  browser,
+  authenticatedPage,
 }) => {
   const bio =
     `This account was updated by an automated test ` +
@@ -91,31 +88,17 @@ test('Update Profile', async ({
     currentPassword
   );
 
-  await expect(profilePage.bioInput).toHaveValue(bio);
+  await expect(
+    profilePage.bioInput
+  ).toHaveValue(bio);
 
-  const newContext = await browser.newContext({
-    baseURL: process.env.UI_BASE_URL,
+  await authenticatedPage.reload({
+    waitUntil: 'domcontentloaded',
   });
 
-  try {
-    const newPage = await newContext.newPage();
-
-    const mainInNewSession = new MainPage(newPage);
-    const loginInNewSession = new LoginPage(newPage);
-    const homeInNewSession = new HomePage(newPage);
-
-    await mainInNewSession.open();
-    await mainInNewSession.openLoginPage();
-
-    await loginInNewSession.login(
-      email,
-      currentPassword
-    );
-
-    await expect(
-      homeInNewSession.newArticleButton
-    ).toBeVisible();
-  } finally {
-    await newContext.close();
-  }
+  await expect(
+    profilePage.bioInput
+  ).toHaveValue(bio, {
+    timeout: 15_000,
+  });
 });

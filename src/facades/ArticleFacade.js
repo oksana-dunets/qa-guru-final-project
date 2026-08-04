@@ -66,14 +66,20 @@ export class ArticleFacade {
     article.body
   );
 
-  // Ждём завершения создания статьи
   await this.articlePage.articleTitle.waitFor({
     state: 'visible',
   });
 
-  await this.homePage.open();
-  await this.feedPage.openGlobalFeed();
+  await this.articlePage.openAuthorProfile();
 
-  await this.feedPage.favoriteArticleByTitle(article.title);
+  await this.feedPage
+    .articleTitleByText(article.title)
+    .waitFor({
+      state: 'visible',
+    });
+
+  await this.feedPage.favoriteArticleByTitle(
+    article.title
+  );
 }
 }

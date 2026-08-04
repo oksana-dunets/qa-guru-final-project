@@ -10,21 +10,17 @@ export class LoginPage {
 
     this.loginButton =
       page.getByRole('button', {
-        name: 'Login'
+        name: 'Login',
       });
   }
 
   async open() {
-    await this.page.goto('https://realworld.qa.guru/#/login');
+    await this.page.goto('/#/login');
   }
 
   async login(email, password) {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
-
-    await Promise.all([
-      this.page.waitForURL('**/#/'),
-      this.loginButton.click()
-    ]);
+    await this.loginButton.click();
   }
 }
