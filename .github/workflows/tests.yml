@@ -27,6 +27,10 @@ jobs:
       TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
       TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
+      ALLURE_ENDPOINT: https://allure.autotests.cloud
+      ALLURE_PROJECT_ID: 5310
+      ALLURE_RESULTS: allure-results
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -36,6 +40,13 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: ${{ env.ALLURE_ENDPOINT }}
+          allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+
       - name: Install dependencies
         run: npm ci
 
@@ -43,7 +54,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: allurectl watch -- npx playwright test
 
       - name: Generate Allure report
         if: always()
