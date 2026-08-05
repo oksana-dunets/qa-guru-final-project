@@ -6,16 +6,14 @@ export class HomePage {
       page.locator('a[href="#/editor"]');
 
     this.userMenuButton =
-      page.locator('.nav-link.dropdown-toggle', {
-        hasText: 'Oksana'
-      });
+      page.locator('.nav-link.dropdown-toggle');
 
     this.settingsButton =
       page.locator('a[href="#/settings"]');
   }
 
   async open() {
-    await this.page.goto('https://realworld.qa.guru/#/');
+    await this.page.goto('/#/');
   }
 
   async clickNewArticle() {

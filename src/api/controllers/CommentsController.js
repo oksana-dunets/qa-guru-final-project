@@ -9,16 +9,19 @@ export class CommentsController {
       {
         data: {
           comment: {
-            body: comment.body,
-          },
-        },
+            body: comment.body
+          }
+        }
       }
     );
   }
 
   async getComments(slug) {
     return this.apiContext.get(
-      `articles/${encodeURIComponent(slug)}/comments`
+      `articles/${encodeURIComponent(slug)}/comments`,
+      {
+        maxRetries: 2
+      }
     );
   }
 

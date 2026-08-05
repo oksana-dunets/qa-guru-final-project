@@ -17,10 +17,13 @@ export class ArticlesController {
   }
 
   async getArticle(slug) {
-    return this.apiContext.get(
-      `articles/${encodeURIComponent(slug)}`
-    );
-  }
+  return this.apiContext.get(
+    `articles/${encodeURIComponent(slug)}`,
+    {
+      maxRetries: 2
+    }
+  );
+}
 
   async updateArticle(slug, article) {
     return this.apiContext.put(
@@ -57,9 +60,11 @@ export class ArticlesController {
 
   async getArticlesByTag(tag) {
   return this.apiContext.get('articles', {
+    maxRetries: 2,
+
     params: {
-      tag,
-    },
+      tag
+    }
   });
 }
 

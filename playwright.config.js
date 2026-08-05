@@ -29,14 +29,16 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'api',
+  name: 'api',
 
-      testMatch: 'api/**/*.spec.js',
+  testMatch: 'api/**/*.spec.js',
 
-      use: {
-        baseURL: process.env.API_BASE_URL,
-      },
-    },
+  retries: 2,
+
+  use: {
+    baseURL: process.env.API_BASE_URL,
+  },
+},
 
     {
       name: 'chromium',

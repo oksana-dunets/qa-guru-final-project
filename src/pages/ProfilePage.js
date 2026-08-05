@@ -30,7 +30,7 @@ export class ProfilePage {
   }
 
   async openSettings() {
-    await this.page.goto('https://realworld.qa.guru/#/settings');
+    await this.page.goto('/#/settings');
 
     await this.bioInput.waitFor({
       state: 'visible'

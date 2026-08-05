@@ -9,9 +9,9 @@ export class AuthController {
         user: {
           username: user.username,
           email: user.email,
-          password: user.password,
-        },
-      },
+          password: user.password
+        }
+      }
     });
   }
 
@@ -20,9 +20,9 @@ export class AuthController {
       data: {
         user: {
           email: user.email,
-          password: user.password,
-        },
-      },
+          password: user.password
+        }
+      }
     });
   }
 }
