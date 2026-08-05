@@ -14,29 +14,63 @@ export default defineConfig({
   workers: 1,
 
   reporter: [
-  ['html'],
-  ['allure-playwright', { resultsDir: 'allure-results' }],
-],
+    ['html'],
+    [
+      'allure-playwright',
+      {
+        resultsDir: 'allure-results',
+      },
+    ],
+  ],
 
   use: {
-    baseURL: process.env.UI_BASE_URL,
     trace: 'on-first-retry',
   },
 
   projects: [
     {
+  name: 'api',
+
+  testMatch: 'api/**/*.spec.js',
+
+  retries: 2,
+
+  use: {
+    baseURL: process.env.API_BASE_URL,
+  },
+},
+
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+
+      testMatch: 'ui/**/*.spec.js',
+
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.UI_BASE_URL,
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+
+      testMatch: 'ui/**/*.spec.js',
+
+      use: {
+        ...devices['Desktop Firefox'],
+        baseURL: process.env.UI_BASE_URL,
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+
+      testMatch: 'ui/**/*.spec.js',
+
+      use: {
+        ...devices['Desktop Safari'],
+        baseURL: process.env.UI_BASE_URL,
+      },
     },
   ],
 });

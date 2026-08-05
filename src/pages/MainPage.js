@@ -7,8 +7,11 @@ export class MainPage {
   }
 
   async open() {
-    await this.page.goto('/#/');
-  }
+  await this.page.goto('/#/', {
+    waitUntil: 'domcontentloaded',
+    timeout: 60_000,
+  });
+}
 
   async openLoginPage() {
     await this.signInButton.click();
