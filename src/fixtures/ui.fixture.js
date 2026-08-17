@@ -4,17 +4,11 @@ import {
 } from '@playwright/test';
 
 import {
-  ArticleFacade,
-  ProfileFacade,
-} from '../facades/index.js';
-
-import {
-  ArticlePage,
-  FeedPage,
   LoginPage,
   MainPage,
-  ProfilePage,
 } from '../pages/index.js';
+
+import { App } from '../app.js';
 
 const email = process.env.TEST_USER_EMAIL;
 const password = process.env.TEST_USER_PASSWORD;
@@ -31,40 +25,12 @@ export const test = base.extend({
     await use(page);
   },
 
-  articleFacade: async ({ authenticatedPage }, use) => {
-    const articleFacade =
-      new ArticleFacade(authenticatedPage);
+  app: async ({ authenticatedPage }, use) => {
+  const app = new App(authenticatedPage);
 
-    await use(articleFacade);
-  },
+  await use(app);
+},
 
-  profileFacade: async ({ authenticatedPage }, use) => {
-    const profileFacade =
-      new ProfileFacade(authenticatedPage);
-
-    await use(profileFacade);
-  },
-
-  articlePage: async ({ authenticatedPage }, use) => {
-    const articlePage =
-      new ArticlePage(authenticatedPage);
-
-    await use(articlePage);
-  },
-
-  feedPage: async ({ authenticatedPage }, use) => {
-    const feedPage =
-      new FeedPage(authenticatedPage);
-
-    await use(feedPage);
-  },
-
-  profilePage: async ({ authenticatedPage }, use) => {
-    const profilePage =
-      new ProfilePage(authenticatedPage);
-
-    await use(profilePage);
-  },
 });
 
 export { expect };

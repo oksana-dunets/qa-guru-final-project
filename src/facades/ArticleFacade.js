@@ -20,7 +20,8 @@ export class ArticleFacade {
     await this.editorPage.createArticle(
       article.title,
       article.description,
-      article.body
+      article.body,
+      article.tagList
     );
   }
 
@@ -31,7 +32,8 @@ export class ArticleFacade {
     await this.editorPage.createArticle(
       article.title,
       article.description,
-      article.body
+      article.body,
+      article.tagList
     );
 
     await this.articlePage.openEditArticle();
@@ -48,7 +50,8 @@ export class ArticleFacade {
     await this.editorPage.createArticle(
       article.title,
       article.description,
-      article.body
+      article.body,
+      article.tagList
     );
 
     await this.articlePage.deleteArticle();
@@ -63,7 +66,8 @@ export class ArticleFacade {
   await this.editorPage.createArticle(
     article.title,
     article.description,
-    article.body
+    article.body,
+    article.tagList
   );
 
   await this.articlePage.articleTitle.waitFor({

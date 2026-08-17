@@ -10,13 +10,13 @@ import {
 
 // № 1 Создание и получение статьи
 test('Create and get article via API', async ({
-  articleApiFacade,
+  api,
   apiSession,
 }) => {
   const article = new ArticleBuilder().build();
 
   const result =
-    await articleApiFacade.createAndGetArticle(article);
+    await api.article.createAndGetArticle(article);
 
   expect(result.createStatus).toBe(201);
 
@@ -49,14 +49,14 @@ test('Create and get article via API', async ({
 
 // № 2 Редактирование созданной статьи
 test('Update article via API', async ({
-  articleApiFacade,
+  api,
   apiSession,
 }) => {
   const article = new ArticleBuilder().build();
   const updatedArticle = new ArticleBuilder().build();
 
   const result =
-    await articleApiFacade.updateAndGetArticle(
+    await api.article.updateAndGetArticle(
       article,
       updatedArticle
     );
@@ -91,12 +91,12 @@ test('Update article via API', async ({
 
 // № 3 Добавление статьи в избранное и удаление из избранного
 test('Favorite and unfavorite article via API', async ({
-  articleApiFacade,
+  api,
 }) => {
   const article = new ArticleBuilder().build();
 
   const result =
-    await articleApiFacade.favoriteAndUnfavoriteArticle(
+    await api.article.favoriteAndUnfavoriteArticle(
       article
     );
 
@@ -123,14 +123,14 @@ test('Favorite and unfavorite article via API', async ({
 
 // № 4 Создание и удаление комментария к статье
 test('Create and delete comment via API', async ({
-  commentApiFacade,
+  api,
   apiSession,
 }) => {
   const article = new ArticleBuilder().build();
   const comment = new CommentBuilder().build();
 
   const result =
-    await commentApiFacade.createGetAndDeleteComment(
+    await api.comment.createGetAndDeleteComment(
       article,
       comment
     );
@@ -181,13 +181,13 @@ test('Create and delete comment via API', async ({
 
 // № 5 Фильтрация статей по тегу
 test('Filter articles by tag via API', async ({
-  articleApiFacade,
+  api,
 }) => {
   const article = new ArticleBuilder().build();
   const tag = article.tagList[0];
 
   const result =
-    await articleApiFacade.createAndFilterArticleByTag(
+    await api.article.createAndFilterArticleByTag(
       article
     );
 

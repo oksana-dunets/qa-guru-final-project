@@ -12,92 +12,83 @@ test.describe.configure({
 const currentPassword = process.env.TEST_USER_PASSWORD;
 
 // № 1 Создание новой статьи
-test('Create Article', async ({
-  articleFacade,
-  articlePage,
-}) => {
+test('Create Article', async ({ app }) => {
   const article = new ArticleBuilder().build();
 
-  await articleFacade.createArticle(article);
+  await app.article.createArticle(article);
 
-  await expect(articlePage.articleTitle).toHaveText(article.title);
+  await expect(app.articlePage.articleTitle)
+    .toHaveText(article.title);
+
+  await expect(app.articlePage.articleBody)
+    .toContainText(article.body);
+
+  await expect(app.articlePage.tagList)
+    .toContainText(article.tagList[0]);
 });
 
 // № 2 Редактирование заголовка созданной статьи
-test('Edit Article', async ({
-  articleFacade,
-  articlePage,
-}) => {
+test('Edit Article', async ({ app }) => {
   const article = new ArticleBuilder().build();
   const updatedArticle = new ArticleBuilder().build();
 
-  await articleFacade.editArticle(
+  await app.article.editArticle(
     article,
     updatedArticle
   );
 
-  await expect(articlePage.articleTitle).toHaveText(
+  await expect(app.articlePage.articleTitle).toHaveText(
     updatedArticle.title
   );
 });
 
 // № 3 Удаление созданной статьи
-test('Delete Article', async ({
-  articleFacade,
-  feedPage,
-}) => {
+test('Delete Article', async ({ app }) => {
   const article = new ArticleBuilder().build();
 
-  await articleFacade.deleteArticle(article);
+  await app.article.deleteArticle(article);
 
   await expect(
-    feedPage.articleTitleByText(article.title)
+    app.feedPage.articleTitleByText(article.title)
   ).toHaveCount(0);
 });
 
 // № 4 Добавление созданной статьи в избранное
-test('Favorite Article', async ({
-  articleFacade,
-  feedPage,
-}) => {
+test('Favorite Article', async ({ app }) => {
   const article = new ArticleBuilder().build();
 
-  await articleFacade.favoriteArticle(article);
+  await app.article.favoriteArticle(article);
 
   await expect(
-    feedPage.articleTitleByText(article.title)
+    app.feedPage.articleTitleByText(article.title)
   ).toBeVisible();
 
   await expect(
-    feedPage.articleFavoriteButtonByTitle(article.title)
+    app.feedPage.articleFavoriteButtonByTitle(article.title)
   ).toContainText('1');
 });
 
 // № 5 Обновление информации в профиле пользователя
-test('Update Profile', async ({
-  profileFacade,
-  profilePage,
-  authenticatedPage,
-}) => {
+test('Update Profile', async ({ app }) => {
   const bio =
     `This account was updated by an automated test ` +
     `${new Date().toLocaleString()}`;
 
-  await profileFacade.updateProfile(
+  await app.profile.updateProfile(
     bio,
     currentPassword
   );
 
   await expect(
-    profilePage.bioInput
+    app.profilePage.bioInput
   ).toHaveValue(bio);
 
-  await authenticatedPage.reload({
+  await app.page.reload({
     waitUntil: 'domcontentloaded',
   });
 
   await expect(
-    profilePage.bioInput
+    app.profilePage.bioInput
   ).toHaveValue(bio, {
     timeout: 15_000,
   });
