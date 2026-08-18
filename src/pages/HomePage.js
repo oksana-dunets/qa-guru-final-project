@@ -1,6 +1,8 @@
-export class HomePage {
+import { MainPage } from './MainPage.js';
+
+export class HomePage extends MainPage {
   constructor(page) {
-    this.page = page;
+    super(page);
 
     this.newArticleButton =
       page.locator('a[href="#/editor"]');
@@ -10,10 +12,6 @@ export class HomePage {
 
     this.settingsButton =
       page.locator('a[href="#/settings"]');
-  }
-
-  async open() {
-    await this.page.goto('/#/');
   }
 
   async clickNewArticle() {

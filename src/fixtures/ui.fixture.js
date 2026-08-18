@@ -4,66 +4,43 @@ import {
 } from '@playwright/test';
 
 import {
-  ArticleFacade,
-  ProfileFacade,
-} from '../facades/index.js';
-
-import {
-  ArticlePage,
-  FeedPage,
-  LoginPage,
   MainPage,
-  ProfilePage,
+  RegistrationPage,
 } from '../pages/index.js';
 
-const email = process.env.TEST_USER_EMAIL;
-const password = process.env.TEST_USER_PASSWORD;
+import { UserBuilder } from '../builders/index.js';
+
+import { App } from '../app.js';
 
 export const test = base.extend({
-  authenticatedPage: async ({ page }, use) => {
+  uiUser: async ({}, use) => {
+    const user = new UserBuilder().build();
+
+    await use(user);
+  },
+
+  authenticatedPage: async ({
+    page,
+    uiUser,
+  }, use) => {
     const mainPage = new MainPage(page);
-    const loginPage = new LoginPage(page);
+    const registrationPage =
+      new RegistrationPage(page);
 
     await mainPage.open();
-    await mainPage.openLoginPage();
-    await loginPage.login(email, password);
+    await mainPage.openRegistrationPage();
+
+    await registrationPage.register(uiUser);
 
     await use(page);
   },
 
-  articleFacade: async ({ authenticatedPage }, use) => {
-    const articleFacade =
-      new ArticleFacade(authenticatedPage);
+  app: async ({
+    authenticatedPage,
+  }, use) => {
+    const app = new App(authenticatedPage);
 
-    await use(articleFacade);
-  },
-
-  profileFacade: async ({ authenticatedPage }, use) => {
-    const profileFacade =
-      new ProfileFacade(authenticatedPage);
-
-    await use(profileFacade);
-  },
-
-  articlePage: async ({ authenticatedPage }, use) => {
-    const articlePage =
-      new ArticlePage(authenticatedPage);
-
-    await use(articlePage);
-  },
-
-  feedPage: async ({ authenticatedPage }, use) => {
-    const feedPage =
-      new FeedPage(authenticatedPage);
-
-    await use(feedPage);
-  },
-
-  profilePage: async ({ authenticatedPage }, use) => {
-    const profilePage =
-      new ProfilePage(authenticatedPage);
-
-    await use(profilePage);
+    await use(app);
   },
 });
 

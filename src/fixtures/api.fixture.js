@@ -7,10 +7,7 @@ import { AuthController } from '../api/index.js';
 
 import { UserBuilder } from '../builders/index.js';
 
-import {
-  ArticleApiFacade,
-  CommentApiFacade,
-} from '../facades/index.js';
+import { Api } from '../api.js';
 
 export const test = base.extend({
   publicApiContext: async ({ playwright }, use) => {
@@ -68,7 +65,7 @@ export const test = base.extend({
     });
   },
 
-  authorizedApiContext: async ({
+    authorizedApiContext: async ({
     playwright,
     apiSession,
   }, use) => {
@@ -86,22 +83,12 @@ export const test = base.extend({
     await authorizedApiContext.dispose();
   },
 
-  articleApiFacade: async ({
+  api: async ({
     authorizedApiContext,
   }, use) => {
-    const articleApiFacade =
-      new ArticleApiFacade(authorizedApiContext);
+    const api = new Api(authorizedApiContext);
 
-    await use(articleApiFacade);
-  },
-
-  commentApiFacade: async ({
-    authorizedApiContext,
-  }, use) => {
-    const commentApiFacade =
-      new CommentApiFacade(authorizedApiContext);
-
-    await use(commentApiFacade);
+    await use(api);
   },
 });
 

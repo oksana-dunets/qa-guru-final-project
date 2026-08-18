@@ -3,6 +3,8 @@ export class ArticlePage {
     this.page = page;
 
     this.articleTitle = page.locator('h1');
+    this.articleBody = page.locator('.article-content');
+    this.tagList = page.locator('.tag-list');
 
     this.authorProfileLink = page
       .locator('.article-meta')

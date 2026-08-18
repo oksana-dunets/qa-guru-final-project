@@ -20,15 +20,22 @@ export class EditorPage {
       page.getByRole('button', {
         name: 'Update Article'
       });
+
+    this.tagsInput =
+  page.getByRole('textbox', {
+    name: 'Enter tags'
+  });
+
   }
 
-  async createArticle(title, description, body) {
-    await this.titleInput.fill(title);
-    await this.descriptionInput.fill(description);
-    await this.bodyInput.fill(body);
+  async createArticle(title, description, body, tagList) {
+  await this.titleInput.fill(title);
+  await this.descriptionInput.fill(description);
+  await this.bodyInput.fill(body);
+  await this.tagsInput.fill(tagList[0]);
 
-    await this.publishButton.click();
-  }
+  await this.publishButton.click();
+}
 
   async updateArticleTitle(newTitle) {
     await this.titleInput.fill(newTitle);

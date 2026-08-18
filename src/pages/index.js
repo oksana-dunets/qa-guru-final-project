@@ -5,3 +5,4 @@ export { HomePage } from './HomePage.js';
 export { LoginPage } from './LoginPage.js';
 export { MainPage } from './MainPage.js';
 export { ProfilePage } from './ProfilePage.js';
+export { RegistrationPage } from './RegistrationPage.js';
