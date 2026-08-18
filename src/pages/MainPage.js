@@ -8,7 +8,7 @@ export class MainPage {
 
   async open() {
   await this.page.goto('/#/', {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'load',
     timeout: 60_000,
   });
 }
