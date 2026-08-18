@@ -25,6 +25,8 @@ test('Create Article', async ({ app }) => {
 
   await expect(app.articlePage.tagList)
     .toContainText(article.tagList[0]);
+
+  await app.articlePage.deleteArticle();
 });
 
 // № 2 Редактирование заголовка созданной статьи
@@ -40,6 +42,8 @@ test('Edit Article', async ({ app }) => {
   await expect(app.articlePage.articleTitle).toHaveText(
     updatedArticle.title
   );
+
+  await app.articlePage.deleteArticle();
 });
 
 // № 3 Удаление созданной статьи
@@ -66,6 +70,11 @@ test('Favorite Article', async ({ app }) => {
   await expect(
     app.feedPage.articleFavoriteButtonByTitle(article.title)
   ).toContainText('1');
+
+  await app.feedPage.openArticleByTitle(article.title);
+
+  await app.articlePage.deleteArticle();
+
 });
 
 // № 5 Обновление информации в профиле пользователя
@@ -92,4 +101,5 @@ test('Update Profile', async ({ app }) => {
   ).toHaveValue(bio, {
     timeout: 15_000,
   });
+
 });

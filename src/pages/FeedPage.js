@@ -60,9 +60,14 @@ export class FeedPage {
     await this.firstArticleFavoriteButton.click();
   }
 
+  async openArticleByTitle(title) {
+  await this.articleTitleByText(title).click();
+}
+
   async favoriteArticleByTitle(title) {
     await this
       .articleFavoriteButtonByTitle(title)
       .click();
   }
+
 }
