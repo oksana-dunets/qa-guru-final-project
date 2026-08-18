@@ -136,11 +136,7 @@ npx playwright install
 UI_BASE_URL=https://realworld.qa.guru
 API_BASE_URL=https://api.realworld.show/api/
 
-TEST_USER_EMAIL=
-TEST_USER_PASSWORD=
 ```
-
-В `TEST_USER_EMAIL` и `TEST_USER_PASSWORD` необходимо указать данные тестового пользователя RealWorld.
 
 Файл `.env` содержит приватные данные и исключён из Git с помощью `.gitignore`.
 
@@ -149,8 +145,6 @@ TEST_USER_PASSWORD=
 ```text
 UI_BASE_URL
 API_BASE_URL
-TEST_USER_EMAIL
-TEST_USER_PASSWORD
 ALLURE_TOKEN
 TELEGRAM_BOT_TOKEN
 TELEGRAM_CHAT_ID

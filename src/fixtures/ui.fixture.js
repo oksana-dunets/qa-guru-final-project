@@ -4,33 +4,44 @@ import {
 } from '@playwright/test';
 
 import {
-  LoginPage,
   MainPage,
+  RegistrationPage,
 } from '../pages/index.js';
+
+import { UserBuilder } from '../builders/index.js';
 
 import { App } from '../app.js';
 
-const email = process.env.TEST_USER_EMAIL;
-const password = process.env.TEST_USER_PASSWORD;
-
 export const test = base.extend({
-  authenticatedPage: async ({ page }, use) => {
+  uiUser: async ({}, use) => {
+    const user = new UserBuilder().build();
+
+    await use(user);
+  },
+
+  authenticatedPage: async ({
+    page,
+    uiUser,
+  }, use) => {
     const mainPage = new MainPage(page);
-    const loginPage = new LoginPage(page);
+    const registrationPage =
+      new RegistrationPage(page);
 
     await mainPage.open();
-    await mainPage.openLoginPage();
-    await loginPage.login(email, password);
+    await mainPage.openRegistrationPage();
+
+    await registrationPage.register(uiUser);
 
     await use(page);
   },
 
-  app: async ({ authenticatedPage }, use) => {
-  const app = new App(authenticatedPage);
+  app: async ({
+    authenticatedPage,
+  }, use) => {
+    const app = new App(authenticatedPage);
 
-  await use(app);
-},
-
+    await use(app);
+  },
 });
 
 export { expect };

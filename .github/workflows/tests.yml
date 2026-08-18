@@ -24,8 +24,6 @@ jobs:
     env:
       UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
       API_BASE_URL: ${{ secrets.API_BASE_URL }}
-      TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-      TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
       ALLURE_ENDPOINT: https://allure.autotests.cloud
       ALLURE_PROJECT_ID: 5310

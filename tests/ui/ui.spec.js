@@ -9,8 +9,6 @@ test.describe.configure({
   timeout: 60_000,
 });
 
-const currentPassword = process.env.TEST_USER_PASSWORD;
-
 // № 1 Создание новой статьи
 test('Create Article', async ({ app }) => {
   const article = new ArticleBuilder().build();
@@ -78,14 +76,14 @@ test('Favorite Article', async ({ app }) => {
 });
 
 // № 5 Обновление информации в профиле пользователя
-test('Update Profile', async ({ app }) => {
+test('Update Profile', async ({ app, uiUser }) => {
   const bio =
     `This account was updated by an automated test ` +
     `${new Date().toLocaleString()}`;
 
   await app.profile.updateProfile(
-    bio,
-    currentPassword
+  bio,
+  uiUser.password
   );
 
   await expect(
