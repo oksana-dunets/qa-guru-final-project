@@ -79,7 +79,6 @@ qa-guru-final-project
 │   ├── facades
 │   ├── fixtures
 │   ├── pages
-│   ├── schemas
 │   └── index.js
 ├── tests
 │   ├── api
