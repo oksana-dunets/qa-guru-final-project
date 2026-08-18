@@ -25,7 +25,7 @@ jobs:
       UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
       API_BASE_URL: ${{ secrets.API_BASE_URL }}
 
-      ALLURE_ENDPOINT: https://allure.autotests.cloud
+      ALLURE_ENDPOINT: https://allure.qa.guru
       ALLURE_PROJECT_ID: 5310
       ALLURE_RESULTS: allure-results
 
